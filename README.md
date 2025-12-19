@@ -20,7 +20,7 @@ The web-app consists of three main panel:
 # Methodological framework behind the CSF assessment
 The CSF assessment is based on a weighted hierarchical approach designed to evaluate forest smartness by integrating ecological, social, and management-related information into a single composite index. The full list of indicators included in the CSF assessment, along with possible calculation methods, is available in the repository folder "tables -> indicators_description".
 
-<img src="/www/framework.png" width="600" align="center"/>
+<img src="/www/CSF_framework.png" width="600" align="center"/>
 
 The process starts from a set of predefined indicators describing key structural and functional attributes of forest stands. Indicator values are first normalized using min–max scaling, so that all variables are expressed on a common scale ranging from 0 (least desirable condition) to 1 (most desirable condition). This step ensures comparability among indicators with different units and ranges.
 Normalized indicators are then weighted according to their relative importance, as defined through expert judgment using the Analytic Hierarchy Process (AHP). The weighting reflects the contribution of each indicator to the three main CSF pillars: Mitigation, Adaptation, and Socio-economic dimension.
