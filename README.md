@@ -9,7 +9,7 @@ The project is funded by **FORWARDS (ForestWard Observatory) EU-funded project**
 </div>
 
 # Launching the web-app 
-CSF-AT  app is available with the following link: https://ricercaforestale-unimol.shinyapps.io/CSF-AT/ 
+CSF-AT  app is available with the following link: https://ricercaforestale-unimol.shinyapps.io/CSF-AT/
 
 ## Sections of web-app
 The web-app consists of three main panel: 
