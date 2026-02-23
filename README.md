@@ -24,7 +24,7 @@ The CSF assessment is based on a weighted hierarchical approach designed to eval
 
 The process starts from a set of predefined indicators describing key structural and functional attributes of forest stands. Indicator values are first normalized using min–max scaling, so that all variables are expressed on a common scale ranging from 0 (least desirable condition) to 1 (most desirable condition). This step ensures comparability among indicators with different units and ranges.
 Normalized indicators are then weighted according to their relative importance, as defined through expert judgment using the Analytic Hierarchy Process (AHP). The weighting reflects the contribution of each indicator to the three main CSF pillars: Mitigation, Adaptation, and Socio-economic dimension.
-Finally, indicators are aggregated hierarchically. First, weighted indicators are combined within each pillar to obtain pillar-specific smartness scores. These pillar scores are then aggregated to compute the **Composite Climate-Smart Forestry Index**, which represents the overall smartness of the forest stand.
+Finally, indicators are aggregated hierarchically. First, weighted indicators are combined within each pillar to obtain pillar-specific smartness scores. These pillar scores are then aggregated to compute the **Composite Climate-Smart Forestry Index**, which represents the overall smartness of the forest stand (Alfieri et al., 2024).
 
 # User Interface and Tutorial
 1.	After launching the app, the user defines the number of datasets to analyze.
@@ -44,3 +44,6 @@ e.	Hover over points to see dataset name, year, number of plots, and absolute sm
 f.	Zoom, pan, and export the graph as a .png file.
 
 <img src="/www/graphic_comparison.png" width="600" align="center"/>
+
+# References
+Alfieri, D., Tognetti, R., & Santopuoli, G. (2024). Exploring climate-smart forestry in Mediterranean forests through an innovative composite climate-smart index. Journal of Environmental Management, 368, 122002.
