@@ -36,14 +36,14 @@ f.	If yearly data are provided, the user can select the year to view correspondi
 4.	The user can click “Download all” to export a .zip archive containing plot-level and stand-level CSV files.
 5.	The user can click “Reset App” to clear all inputs and start over.
 
-<img src="/www/smartness_calculation.jpg" width="600" align="center"/>
+<img src="/www/smartness_calculation.png" width="600" align="center"/>
 
 7.	To explore smartness visually, the user switches to the “Graphic Comparison” window:
 d.	View the interactive ternary plot showing contributions of mitigation, adaptation, and social dimension.
 e.	Hover over points to see dataset name, year, number of plots, and absolute smartness scores.
 f.	Zoom, pan, and export the graph as a .png file.
 
-<img src="/www/graphic_comparison.png" width="600" align="center"/>
+<img src="/www/graphic_comparison.jpg" width="600" align="center"/>
 
 # References
 Alfieri, D., Tognetti, R., & Santopuoli, G. (2024). Exploring climate-smart forestry in Mediterranean forests through an innovative composite climate-smart index. Journal of Environmental Management, 368, 122002.
