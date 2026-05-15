@@ -39,9 +39,11 @@ f.	If yearly data are provided, the user can select the year to view correspondi
 <img src="/www/smartness_calculation.png" width="600" align="center"/>
 
 7.	To explore smartness visually, the user switches to the “Graphic Comparison” window:
-d.	View the interactive ternary plot showing contributions of mitigation, adaptation, and social dimension.
-e.	Hover over points to see dataset name, year, number of plots, and absolute smartness scores.
-f.	Zoom, pan, and export the graph as a .png file.
+a.	View the interactive ternary plot showing contributions of mitigation, adaptation, and social dimension.
+b.	Use the interpretation support text to better understand the graphical outputs.
+c.  Explore the boxplot displaying the distribution of climate-smartness values within forest stands.
+d.  Visualize temporal trends of climate-smartness through the line plot (when a year variable is available).
+The user can also interact with all graphs by hovering over elements to view detailed information, filtering datasets via the legend, zooming/panning, and exporting figures as .png files.
 
 <img src="/www/graphic_comparison.jpg" width="600" align="center"/>
 
