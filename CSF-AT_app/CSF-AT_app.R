@@ -30,6 +30,9 @@ if (!require("rsconnect", quietly = TRUE)) {
 if (!require("readr", quietly = TRUE)) {
   install.packages("readr")
 }
+if (!require("zip", quietly = TRUE)) {
+  install.packages("zip")
+}
 
 library(readr)
 library(shiny)
@@ -1297,28 +1300,64 @@ server <- function(input, output, session) {
   
   # download all ####
   output$download_all <- downloadHandler(
-    filename = function() { paste0("smartness_results_", Sys.Date(), ".zip") },
+    
+    filename = function() {
+      paste0("smartness_results_", Sys.Date(), ".zip")
+    },
+    
     content = function(zipfile) {
-      tmp_dir <- tempdir(); file_list <- c()
+      
+      tmp_dir <- tempfile("csf_export_")
+      dir.create(tmp_dir)
+      
+      file_list <- c()
+      
       for (i in seq_len(input$n_datasets)) {
+        
         ns <- paste0("ds", i)
+        
         df <- data_list[[ns]]
-        if (is.null(df)) next
-        name_prefix <- if (!is.null(filenames[[ns]])) filenames[[ns]] else paste0("dataset_", i)
         
-        # Exclude any helper/internal columns (e.g. *_norm) from exported per-plot results if desired
-        # Keep original indicators + results. Remove columns that are strictly internal (ending with _norm)
-        export_df <- df %>% select(-matches("_norm$"))
+        if (is.null(df))
+          next
         
-        file_data <- file.path(tmp_dir, paste0(name_prefix, "_plot_level.csv"))
-        write.csv(export_df, file_data, row.names = FALSE); file_list <- c(file_list, file_data)
+        name_prefix <- if (!is.null(filenames[[ns]])) {
+          filenames[[ns]]
+        } else {
+          paste0("dataset_", i)
+        }
         
-        # means per year if year present
-        if (!is.null(meta[[paste0(ns, "_has_year")]]) && meta[[paste0(ns, "_has_year")]]) {
+        # --------------------------
+        # Plot-level results
+        # --------------------------
+        
+        export_df <- df %>%
+          select(-matches("_norm$"))
+        
+        plot_file <- file.path(
+          tmp_dir,
+          paste0(name_prefix, "_plot_level.csv")
+        )
+        
+        write.csv(
+          export_df,
+          plot_file,
+          row.names = FALSE
+        )
+        
+        file_list <- c(file_list, plot_file)
+        
+        # --------------------------
+        # Stand-level results
+        # --------------------------
+        
+        if (isTRUE(meta[[paste0(ns, "_has_year")]])) {
+          
           means_df <- df %>%
             group_by(year) %>%
             summarise(
               Nplots = n(),
+              
               Smartness = mean(csf, na.rm = TRUE),
               Smartness_sd = sd(csf, na.rm = TRUE),
               
@@ -1330,35 +1369,58 @@ server <- function(input, output, session) {
               
               Socio_economic = mean(csf_sd, na.rm = TRUE),
               Socio_economic_sd = sd(csf_sd, na.rm = TRUE),
+              
               .groups = "drop"
-            ) %>%
-            arrange(as.numeric(year))
+            )
+          
         } else {
+          
           means_df <- data.frame(
             year = NA_character_,
             Nplots = nrow(df),
-            Smartness = mean(csf, na.rm = TRUE),
-            Smartness_sd = sd(csf, na.rm = TRUE),
             
-            Mitigation = mean(csf_mit, na.rm = TRUE),
-            Mitigation_sd = sd(csf_mit, na.rm = TRUE),
+            Smartness = mean(df$csf, na.rm = TRUE),
+            Smartness_sd = sd(df$csf, na.rm = TRUE),
             
-            Adaptation = mean(csf_adp, na.rm = TRUE),
-            Adaptation_sd = sd(csf_adp, na.rm = TRUE),
+            Mitigation = mean(df$csf_mit, na.rm = TRUE),
+            Mitigation_sd = sd(df$csf_mit, na.rm = TRUE),
             
-            Socio_economic = mean(csf_sd, na.rm = TRUE),
-            Socio_economic_sd = sd(csf_sd, na.rm = TRUE),
+            Adaptation = mean(df$csf_adp, na.rm = TRUE),
+            Adaptation_sd = sd(df$csf_adp, na.rm = TRUE),
+            
+            Socio_economic = mean(df$csf_sd, na.rm = TRUE),
+            Socio_economic_sd = sd(df$csf_sd, na.rm = TRUE),
+            
             stringsAsFactors = FALSE
           )
         }
         
-        file_mean <- file.path(tmp_dir, paste0(name_prefix, "_stand_level.csv"))
-        write.csv(means_df, file_mean, row.names = FALSE); file_list <- c(file_list, file_mean)
+        stand_file <- file.path(
+          tmp_dir,
+          paste0(name_prefix, "_stand_level.csv")
+        )
+        
+        write.csv(
+          means_df,
+          stand_file,
+          row.names = FALSE
+        )
+        
+        file_list <- c(file_list, stand_file)
       }
-      zip(zipfile, files = file_list, flags = "-j")
+      
+      # Nessun file disponibile
+      if (length(file_list) == 0) {
+        stop("No results available for download.")
+      }
+      
+      # Creazione ZIP
+      zip::zipr(
+        zipfile = zipfile,
+        files = file_list
+      )
     }
   )
-  
 }
 
 # Launch the app ####
