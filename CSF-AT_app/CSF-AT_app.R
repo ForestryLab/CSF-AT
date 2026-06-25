@@ -1409,12 +1409,12 @@ server <- function(input, output, session) {
         file_list <- c(file_list, stand_file)
       }
       
-      # Nessun file disponibile
+      # No file available
       if (length(file_list) == 0) {
         stop("No results available for download.")
       }
       
-      # Creazione ZIP
+      # ZIP Creation
       zip::zipr(
         zipfile = zipfile,
         files = file_list
